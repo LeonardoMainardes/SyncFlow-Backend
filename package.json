@@ -1,0 +1,44 @@
+{
+  "name": "syncflow---backend",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "prepare": "husky",
+    "lint": "biome check",
+    "format": "biome format --write"
+  },
+  "lint-staged": {
+    "*.{js,ts,jsx,tsx,json,jsonc}": [
+      "bunx biome check --write --staged",
+      "git add"
+    ],
+    "*.{css,scss,md}": [
+      "bunx biome format --write --staged",
+      "git add"
+    ]
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.7",
+    "@commitlint/cli": "20.5.0",
+    "@commitlint/config-conventional": "20.5.0",
+    "@types/bun": "latest",
+    "@types/node": "25.5.0",
+    "husky": "9.1.7",
+    "lint-staged": "16.4.0",
+    "prisma": "7.5.0",
+    "tsx": "4.21.0"
+  },
+  "peerDependencies": {
+    "typescript": "5.9.3"
+  },
+  "dependencies": {
+    "@fastify/swagger": "9.7.0",
+    "@fastify/swagger-ui": "5.2.5",
+    "@prisma/client": "7.5.0",
+    "fastify": "5.8.2"
+  }
+}
