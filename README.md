@@ -50,24 +50,35 @@ cd SyncFlow-Backend
 bun install
 ```
 
-### 3. Suba o banco de dados com Docker
+### 3. Configure as variáveis de ambiente
+
+Copie o arquivo de exemplo e preencha com suas credenciais:
+
+```bash
+cp .env.example .env
+```
+
+O `.env.example` contém as variáveis necessárias:
+
+```env
+# Banco de dados
+DB_USER=
+DB_PASSWORD=
+DB_NAME=syncflow
+
+# Prisma
+DATABASE_URL="postgresql://${DB_USER}:${DB_PASSWORD}@localhost:5432/${DB_NAME}"
+```
+
+> ⚠️ **Nunca commite o arquivo `.env`** — ele já está no `.gitignore`. Apenas o `.env.example` vai ao repositório.
+
+### 4. Suba o banco de dados com Docker
 
 ```bash
 docker-compose up -d postgres
 ```
 
-Isso vai iniciar um container PostgreSQL na porta `5432` com:
-- **Usuário:** `postgres`
-- **Senha:** `123`
-- **Banco:** `syncflow`
-
-### 4. Configure as variáveis de ambiente
-
-Crie um arquivo `.env` na raiz:
-
-```env
-DATABASE_URL="postgresql://postgres:123@localhost:5432/syncflow"
-```
+O Docker Compose lê as variáveis do `.env` automaticamente para configurar o container PostgreSQL.
 
 ### 5. Execute as migrations do Prisma
 
@@ -91,16 +102,18 @@ Acesse `http://localhost:8888/docs` para ver e testar os endpoints interativamen
 
 ## 🐳 Rodando com Docker Compose completo
 
-Para subir a API e o banco juntos:
+Para subir a API e o banco juntos (certifique-se de ter o `.env` configurado):
 
 ```bash
 docker-compose up --build
 ```
 
-| Serviço | Porta |
-|---------|-------|
-| API     | 8888  |
-| PostgreSQL | 5432 |
+| Serviço    | Porta |
+|------------|-------|
+| API        | 8888  |
+| PostgreSQL | 5432  |
+
+> O `docker-compose.yml` utiliza variáveis de ambiente do `.env` — nenhuma credencial fica hardcoded no repositório.
 
 ---
 
@@ -117,6 +130,8 @@ docker-compose up --build
 │   └── schema.prisma  # Modelagem do banco de dados
 ├── .cursor/rules/     # Regras do Cursor AI para o projeto
 ├── .husky/            # Hooks de pre-commit
+├── .env.example       # Variáveis de ambiente (template — vai ao Git)
+├── .env               # Variáveis de ambiente (valores reais — no .gitignore)
 ├── Dockerfile
 ├── docker-compose.yml
 ├── biome.json         # Config do linter/formatter
