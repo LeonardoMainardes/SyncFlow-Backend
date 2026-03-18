@@ -70,15 +70,11 @@ DB_NAME=syncflow
 DATABASE_URL="postgresql://${DB_USER}:${DB_PASSWORD}@localhost:5432/${DB_NAME}"
 ```
 
-> ⚠️ **Nunca commite o arquivo `.env`** — ele já está no `.gitignore`. Apenas o `.env.example` vai ao repositório.
-
 ### 4. Suba o banco de dados com Docker
 
 ```bash
 docker-compose up -d postgres
 ```
-
-O Docker Compose lê as variáveis do `.env` automaticamente para configurar o container PostgreSQL.
 
 ### 5. Execute as migrations do Prisma
 
@@ -112,8 +108,6 @@ docker-compose up --build
 |------------|-------|
 | API        | 8888  |
 | PostgreSQL | 5432  |
-
-> O `docker-compose.yml` utiliza variáveis de ambiente do `.env` — nenhuma credencial fica hardcoded no repositório.
 
 ---
 
